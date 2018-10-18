@@ -1,4 +1,4 @@
-package com.example.o4get.myapplication32
+package com.itomakiweb.statusReader
 
 class Ranking(private val wordMap: Map<String, Int>, private val speed: Int) {
     val SINGLE_WORD_SCORE = 3
