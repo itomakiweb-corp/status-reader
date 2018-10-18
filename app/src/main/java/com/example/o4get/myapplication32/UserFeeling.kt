@@ -1,4 +1,4 @@
-package com.example.o4get.myapplication32
+package com.itomakiweb.statusReader
 
 data class UserFeeling (var userName: String,
                         var comment1: String,
