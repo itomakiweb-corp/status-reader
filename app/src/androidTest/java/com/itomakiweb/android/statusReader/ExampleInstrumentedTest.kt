@@ -1,4 +1,4 @@
-package com.itomakiweb.statusReader
+package com.itomakiweb.android.statusReader
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.itomakiweb.statusReader", appContext.packageName)
+        assertEquals("com.itomakiweb.android.statusReader", appContext.packageName)
     }
 }
