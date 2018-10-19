@@ -1,4 +1,4 @@
-package com.example.o4get.myapplication32
+package com.itomakiweb.statusReader
 
 import org.junit.Test
 
