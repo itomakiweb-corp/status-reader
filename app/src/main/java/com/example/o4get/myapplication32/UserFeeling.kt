@@ -1,6 +1,7 @@
 package com.itomakiweb.statusReader
 
 data class UserFeeling (var userName: String,
+                        var userId: String,
                         var comment1: String,
                         var comment2: String,
                         var comment3: String,

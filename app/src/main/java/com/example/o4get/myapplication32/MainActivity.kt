@@ -30,18 +30,30 @@ class MainActivity : AppCompatActivity() {
     var inputEnableTime = 0
     var timeLimit = 0
     var timeCount = 0
+    var inputTimeCount = 0
     var isTimeout = false
     var inputStart : Date = Date()
+
+    private var userId = ""
+    private var userName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var extras = intent.extras
+        if(extras != null){
+            userId = extras.getString("id")
+            userName = extras.getString("name")
+        }
+
         inputEnableTime = 5
         //TODO okabe サインインしたユーザの権限からtimeLimitを確定する？
         timeLimit = 36 + inputEnableTime
+        textView.text = ""
+        inputTimeCount -= inputEnableTime
 
-        comment1.isEnabled = false
+                comment1.isEnabled = false
         button.isEnabled = false
 
         comment2.isEnabled = false
@@ -85,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 //            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-//                //TODO okabe URLによっては複数回通るみたいなのでつかいづらい。（１、https://www.youtube.com/　２、https://m.youtube.com/）
+//                //INFO okabe URLによっては複数回通るみたいなのでつかいづらい。（１、https://www.youtube.com/　２、https://m.youtube.com/）
 //                handler.post(runnable)
 //            }
         }
@@ -96,6 +108,7 @@ class MainActivity : AppCompatActivity() {
     val runnable = object : Runnable {
         override fun run() {
             timeCount++
+            inputTimeCount++
 
             if (timeCount == inputEnableTime){
                 //TODO okabe これは暫定処理。見始めてから５秒で入力可能
@@ -106,7 +119,9 @@ class MainActivity : AppCompatActivity() {
 
             if (timeCount <= timeLimit){
                 handler.postDelayed(this, 1000)
-                textView.text = timeCount.toString()
+                if(inputTimeCount >= 0){
+                    textView.text = inputTimeCount.toString()
+                }
             }
             else{
                 isTimeout = true
@@ -135,8 +150,9 @@ class MainActivity : AppCompatActivity() {
         var elapsedDate = Date(elapsedMilliSec)
 
         var udata = UserFeeling(
-                "okabe",
-                 comment1Text, comment2Text, comment3Text, elapsedMilliSec, SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(Date())
+                userName,userId,
+                comment1Text, comment2Text, comment3Text,
+                elapsedMilliSec, SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(Date())
         )
 
 
@@ -151,6 +167,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
                         response.body()?.let {
+
                             AlertDialog.Builder(this@MainActivity)
                                     .setTitle("Send Data")
                                     .setMessage("success.").show()
