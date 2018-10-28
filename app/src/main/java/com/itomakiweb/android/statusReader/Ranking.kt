@@ -1,4 +1,4 @@
-package com.itomakiweb.statusReader
+package com.itomakiweb.android.statusReader
 
 class Ranking(private val wordMap: Map<String, Int>, private val speed: Int) {
     val SINGLE_WORD_SCORE = 3

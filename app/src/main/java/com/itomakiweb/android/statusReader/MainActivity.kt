@@ -1,4 +1,4 @@
-package com.itomakiweb.statusReader
+package com.itomakiweb.android.statusReader
 
 import  android.os.Handler
 import android.app.AlertDialog

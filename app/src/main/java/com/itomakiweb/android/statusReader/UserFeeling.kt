@@ -1,4 +1,4 @@
-package com.itomakiweb.statusReader
+package com.itomakiweb.android.statusReader
 
 data class UserFeeling (var userName: String,
                         var userId: String,

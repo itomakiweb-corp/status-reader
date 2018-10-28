@@ -1,4 +1,4 @@
-package com.itomakiweb.statusReader
+package com.itomakiweb.android.statusReader
 
 import okhttp3.Response
 import okhttp3.ResponseBody

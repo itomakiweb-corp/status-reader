@@ -1,4 +1,4 @@
-package com.example.o4get.myapplication32
+package com.itomakiweb.android.statusReader
 
 import org.junit.Test
 import org.junit.Assert.*
