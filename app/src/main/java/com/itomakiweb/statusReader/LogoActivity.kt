@@ -1,4 +1,4 @@
-package com.itomakiweb.statusReader
+package com.itomakiweb.android.statusReader
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
