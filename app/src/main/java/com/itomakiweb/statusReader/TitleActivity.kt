@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.example.o4get.myapplication32.UserRequest
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult

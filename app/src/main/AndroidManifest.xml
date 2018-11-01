@@ -39,10 +39,6 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.example.o4get.myapplication32.SigninActivity"
-            android:label="@string/title_activity_signin"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".TitleActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_title"

@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -67,22 +68,27 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener{
             comment1.isEnabled = false
             button.isEnabled = false
+            comment_con1.visibility = View.GONE
             if (!isTimeout){
                 comment2.isEnabled = true
                 button2.isEnabled = true
+                comment_con2.visibility = View.VISIBLE
             }
         }
         button2.setOnClickListener{
             comment2.isEnabled = false
             button2.isEnabled = false
+            comment_con2.visibility = View.GONE
             if (!isTimeout){
                 comment3.isEnabled = true
                 button3.isEnabled = true
+                comment_con3.visibility = View.VISIBLE
             }
         }
         button3.setOnClickListener{
             comment3.isEnabled = false
             button3.isEnabled = false
+            comment_con3.visibility = View.GONE
             sendComment(Date())
         }
 
@@ -114,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                 //TODO okabe これは暫定処理。見始めてから５秒で入力可能
                 comment1.isEnabled = true
                 button.isEnabled = true
+                comment_con1.visibility = View.VISIBLE
                 inputStart = Date()
             }
 
@@ -141,6 +148,10 @@ class MainActivity : AppCompatActivity() {
 
         comment3.isEnabled = false
         button3.isEnabled = false
+
+        comment_con1.visibility = View.VISIBLE
+        comment_con2.visibility = View.VISIBLE
+        comment_con3.visibility = View.VISIBLE
 
         comment1Text = comment1.text.toString()
         comment2Text = comment2.text.toString()

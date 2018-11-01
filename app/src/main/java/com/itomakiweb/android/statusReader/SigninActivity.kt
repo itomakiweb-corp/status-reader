@@ -1,4 +1,4 @@
-package com.example.o4get.myapplication32
+package com.itomakiweb.android.statusReader
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
-import com.itomakiweb.statusReader.R
+//import com.itomakiweb.statusReader.R
 
 import kotlinx.android.synthetic.main.activity_signin.*
 import com.facebook.FacebookException
@@ -30,8 +30,7 @@ class SigninActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signin)
-        setSupportActionBar(toolbar)
+//        setContentView(R.layout.activity_signin)
 
         try{
             var token = AccessToken.getCurrentAccessToken()
@@ -71,7 +70,6 @@ class SigninActivity : AppCompatActivity() {
                         .setTitle("Signin")
                         .setMessage("token: " + result?.accessToken).show()
 
-                var ur = UserRequest()
             }
 
             override fun onCancel() {

@@ -16,14 +16,16 @@ import android.content.Intent
 class LogoActivity : AppCompatActivity() {
     val handler = Handler()
 
+    override fun onStart() {
+        super.onStart()
+        handler.post(runnable)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_logo)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        handler.post(runnable)
     }
 
     val runnable = object : Runnable {
