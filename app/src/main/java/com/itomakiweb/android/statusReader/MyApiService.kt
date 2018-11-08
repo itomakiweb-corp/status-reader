@@ -1,6 +1,6 @@
 package com.itomakiweb.android.statusReader
 
-import okhttp3.Response
+import com.itomakiweb.android.statusReader.service.UserFeeling
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*

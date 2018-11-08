@@ -1,11 +1,11 @@
-package com.itomakiweb.android.statusReader
+package com.itomakiweb.android.statusReader.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-
+import com.itomakiweb.android.statusReader.R
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.content_home.*
+
 
 class HomeActivity : AppCompatActivity() {
     var userId = ""
@@ -16,16 +16,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        var extras = intent.extras
-        if(extras != null){
-            userId = extras.getString("id")
-            userName = extras.getString("name")
-        }
-
         button4.setOnClickListener {
             val intent = Intent(this@HomeActivity, MainActivity::class.java)
-            intent.putExtra("id",userId)
-            intent.putExtra("name",userName)
+//            intent.putExtra("id",userId)
+//            intent.putExtra("name",userName)
             startActivity(intent)
         }
     }

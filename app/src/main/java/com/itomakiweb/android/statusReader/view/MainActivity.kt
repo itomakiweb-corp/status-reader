@@ -1,27 +1,27 @@
-package com.itomakiweb.android.statusReader
+package com.itomakiweb.android.statusReader.view
 
 import  android.os.Handler
-import android.app.AlertDialog
-import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.View
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.google.gson.Gson
+import android.widget.Toast
+import com.itomakiweb.android.statusReader.R
+import com.itomakiweb.android.statusReader.model.UserAuthManager
+import com.itomakiweb.android.statusReader.service.StatusReaderApiClient
+import com.itomakiweb.android.statusReader.service.UserFeeling
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity() {
-    private val userFeelingsService by lazy { createService() }
+//    private val userFeelingsService by lazy { createService() }
 
     private var comment1Text : String = ""
     private var comment2Text : String = ""
@@ -41,12 +41,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var extras = intent.extras
-        if(extras != null){
-            userId = extras.getString("id")
-            userName = extras.getString("name")
-        }
 
         inputEnableTime = 5
         //TODO okabe サインインしたユーザの権限からtimeLimitを確定する？
@@ -92,7 +86,6 @@ class MainActivity : AppCompatActivity() {
             sendComment(Date())
         }
 
-        //var webview : WebView = myWebView
         myWebView.settings.javaScriptEnabled = true
         myWebView.settings.loadWithOverviewMode = false
         myWebView.webViewClient = object : WebViewClient(){
@@ -161,27 +154,41 @@ class MainActivity : AppCompatActivity() {
         var elapsedDate = Date(elapsedMilliSec)
 
         var udata = UserFeeling(
-                userName,userId,
+                UserAuthManager.CurrentUserName, UserAuthManager.CurrentUserId,
                 comment1Text, comment2Text, comment3Text,
                 elapsedMilliSec, SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(Date())
         )
 
 
         try {
-            var res = userFeelingsService.createUser(udata).enqueue(object : Callback<ResponseBody> {
+            var res = StatusReaderApiClient.Instance.createUserFeeling(udata).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+
                     AlertDialog.Builder(this@MainActivity)
                             .setTitle("Send Data")
-                            .setMessage("failed.").show()
+                            .setMessage("failed.")
+                            .show()
                 }
 
                 override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
                         response.body()?.let {
+                            var content = it.string()
+                            AlertDialog.Builder(this@MainActivity).apply {
+                                setTitle("Send Data")
+                                setMessage("success.")
+//                                setPositiveButton("",{_, _ ->
+//                                    Toast.makeText(this@MainActivity, "Dialog OK", Toast.LENGTH_LONG).show()
+//                                })
+                                setPositiveButton("OK"){_,_ ->
+                                    Toast.makeText(context, "Dialog OK", Toast.LENGTH_LONG).show()
+                                }
+                                setNegativeButton("RETURN"){_,_->
+                                    finish()
+                                }
+                                show()
+                            }
 
-                            AlertDialog.Builder(this@MainActivity)
-                                    .setTitle("Send Data")
-                                    .setMessage("success.").show()
                         }
                     }
                 }
@@ -195,15 +202,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-fun createService(): MyApiService {
-    val baseUrl = "https://todoapidozeu.azurewebsites.net/api/"
-//    val baseUrl = "https://localhost:44322/"
-    val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(Gson()))
-            .baseUrl(baseUrl)
-            .build()
-    return retrofit.create(MyApiService::class.java)
-}
-
 

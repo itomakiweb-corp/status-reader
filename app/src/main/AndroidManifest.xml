@@ -36,18 +36,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".TitleActivity"
+            android:name=".view.TitleActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_title"
-            android:theme="@style/FullscreenTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LogoActivity"
+            android:name=".view.LaunchActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_logo"
-            android:theme="@style/FullscreenTheme">
+            android:label="@string/title_activity_launch"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,9 +55,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".view.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.Launch2Activity"
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,24 +1,17 @@
-package com.itomakiweb.android.statusReader
+package com.itomakiweb.android.statusReader.view
 
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 //import com.itomakiweb.statusReader.R
 
-import kotlinx.android.synthetic.main.activity_signin.*
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.facebook.FacebookCallback
 import com.facebook.login.LoginManager
-import kotlinx.android.synthetic.main.content_signin.*
-import retrofit2.http.GET
-import com.facebook.GraphRequest
-
-
 
 
 class SigninActivity : AppCompatActivity() {

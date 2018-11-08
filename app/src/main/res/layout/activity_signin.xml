@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_signin" />
+    <include layout="@layout/content_title" />
 
 
 </android.support.design.widget.CoordinatorLayout>
