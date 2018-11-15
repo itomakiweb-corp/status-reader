@@ -13,6 +13,7 @@ import com.facebook.login.LoginResult
 import com.facebook.FacebookCallback
 import com.facebook.login.LoginManager
 
+//TODO okabe あとでけす
 
 class SigninActivity : AppCompatActivity() {
     private var shouldSignin = true

@@ -16,7 +16,7 @@ object UserAuthManager {
     private val pref_userId = "USER_ID"
     private val pref_userName = "USER_NAME"
 
-    fun ShouldSignin(context: Context) :Boolean{
+    fun shouldSignIn(context: Context) :Boolean{
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         val authType = pref.getString(pref_authType, StatusReaderAuthType.NONE.value)
 
@@ -62,7 +62,7 @@ object UserAuthManager {
         return result
     }
 
-    fun SaveAuth(context: Context, authType:StatusReaderAuthType, userId: String, userName: String){
+    fun saveAuth(context: Context, authType:StatusReaderAuthType, userId: String, userName: String){
         val pref = PreferenceManager.getDefaultSharedPreferences(context)
         var editor = pref.edit()
         try {
@@ -74,6 +74,24 @@ object UserAuthManager {
             CurrentAuthType = authType
             CurrentUserId = userId
             CurrentUserName = userName
+        }
+        catch (error: Exception){
+            throw error
+        }
+    }
+
+    fun signOut(context: Context){
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        var editor = pref.edit()
+        try {
+            editor.putString(pref_authType, StatusReaderAuthType.NONE.value)
+            editor.putString(pref_userId, "")
+            editor.putString(pref_userName, "")
+            editor.apply()
+
+            CurrentAuthType = StatusReaderAuthType.NONE
+            CurrentUserId = ""
+            CurrentUserName = ""
         }
         catch (error: Exception){
             throw error

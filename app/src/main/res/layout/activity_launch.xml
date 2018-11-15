@@ -32,10 +32,12 @@
             android:textStyle="bold" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressBar_launch"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="120sp"
-            android:layout_height="120sp" />
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible" />
     </LinearLayout>
 
 </FrameLayout>

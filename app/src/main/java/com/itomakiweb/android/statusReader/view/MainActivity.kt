@@ -10,22 +10,25 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import com.itomakiweb.android.statusReader.R
 import com.itomakiweb.android.statusReader.model.UserAuthManager
+import com.itomakiweb.android.statusReader.service.Score
+import com.itomakiweb.android.statusReader.service.Seed
 import com.itomakiweb.android.statusReader.service.StatusReaderApiClient
-import com.itomakiweb.android.statusReader.service.UserFeeling
+import com.itomakiweb.android.statusReader.service.Stery
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 import java.util.*
 import java.text.SimpleDateFormat
 
 class MainActivity : AppCompatActivity() {
 //    private val userFeelingsService by lazy { createService() }
 
-    private var comment1Text : String = ""
-    private var comment2Text : String = ""
-    private var comment3Text : String = ""
+//    private var comment1Text : String = ""
+//    private var comment2Text : String = ""
+//    private var comment3Text : String = ""
 
     val handler = Handler()
     var inputEnableTime = 0
@@ -34,28 +37,36 @@ class MainActivity : AppCompatActivity() {
     var inputTimeCount = 0
     var isTimeout = false
     var inputStart : Date = Date()
+    var seedUrl = ""
 
-    private var userId = ""
-    private var userName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        inputEnableTime = 5
-        //TODO okabe サインインしたユーザの権限からtimeLimitを確定する？
-        timeLimit = 36 + inputEnableTime
-        textView.text = ""
-        inputTimeCount -= inputEnableTime
+        var seed: Seed
+        try {
+            seed = intent.getSerializableExtra("seed") as Seed
+            inputEnableTime = seed.inputStartTime
+            //TODO okabe サインインしたユーザの権限からtimeLimitを確定する？
+            timeLimit = seed.inputEndTime
+            textView.text = ""
+            inputTimeCount -= inputEnableTime
+            seedUrl = seed.seedUrl
+        }
+        catch (error: Exception){
+            finish()
+        }
 
-                comment1.isEnabled = false
-        button.isEnabled = false
 
-        comment2.isEnabled = false
-        button2.isEnabled = false
-
-        comment3.isEnabled = false
-        button3.isEnabled = false
+//        comment1.isEnabled = false
+//        button.isEnabled = false
+//
+//        comment2.isEnabled = false
+//        button2.isEnabled = false
+//
+//        comment3.isEnabled = false
+//        button3.isEnabled = false
 
 
 
@@ -67,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                 comment2.isEnabled = true
                 button2.isEnabled = true
                 comment_con2.visibility = View.VISIBLE
+                comment2.requestFocusFromTouch()
             }
         }
         button2.setOnClickListener{
@@ -77,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                 comment3.isEnabled = true
                 button3.isEnabled = true
                 comment_con3.visibility = View.VISIBLE
+                comment3.requestFocusFromTouch()
             }
         }
         button3.setOnClickListener{
@@ -100,7 +113,13 @@ class MainActivity : AppCompatActivity() {
 //                handler.post(runnable)
 //            }
         }
-        myWebView.loadUrl("https://www.youtube.com/watch?v=6N74Q467uok")
+
+        try {
+            myWebView.loadUrl(seedUrl)
+        }
+        catch (error: Exception){
+            Toast.makeText(this,"can not load url ${seedUrl}", Toast.LENGTH_LONG)
+        }
 
     }
 
@@ -114,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                 comment1.isEnabled = true
                 button.isEnabled = true
                 comment_con1.visibility = View.VISIBLE
+                comment1.requestFocusFromTouch()
                 inputStart = Date()
             }
 
@@ -146,59 +166,49 @@ class MainActivity : AppCompatActivity() {
         comment_con2.visibility = View.VISIBLE
         comment_con3.visibility = View.VISIBLE
 
-        comment1Text = comment1.text.toString()
-        comment2Text = comment2.text.toString()
-        comment3Text = comment3.text.toString()
-
         var elapsedMilliSec = sendTime.time - inputStart.time
-        var elapsedDate = Date(elapsedMilliSec)
 
-        var udata = UserFeeling(
-                UserAuthManager.CurrentUserName, UserAuthManager.CurrentUserId,
-                comment1Text, comment2Text, comment3Text,
-                elapsedMilliSec, SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(Date())
+        var udata = Stery(
+                userName= UserAuthManager.CurrentUserName,
+                userId =  UserAuthManager.CurrentUserId,
+                comment1 =  comment1.text.toString(),
+                comment2 = comment2.text.toString(),
+                comment3 = comment3.text.toString(),
+                elapsedMilliSec = elapsedMilliSec
         )
 
 
-        try {
-            var res = StatusReaderApiClient.Instance.createUserFeeling(udata).enqueue(object : Callback<ResponseBody> {
-                override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+        StatusReaderApiClient.Instance.createStery(udata).enqueue(object : Callback<Score> {
+            override fun onFailure(call: Call<Score>?, t: Throwable?) {
 
-                    AlertDialog.Builder(this@MainActivity)
-                            .setTitle("Send Data")
-                            .setMessage("failed.")
-                            .show()
-                }
+                AlertDialog.Builder(this@MainActivity)
+                        .setTitle("Send Data")
+                        .setMessage("failed.")
+                        .show()
+            }
 
-                override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            var content = it.string()
-                            AlertDialog.Builder(this@MainActivity).apply {
-                                setTitle("Send Data")
-                                setMessage("success.")
-//                                setPositiveButton("",{_, _ ->
-//                                    Toast.makeText(this@MainActivity, "Dialog OK", Toast.LENGTH_LONG).show()
-//                                })
-                                setPositiveButton("OK"){_,_ ->
-                                    Toast.makeText(context, "Dialog OK", Toast.LENGTH_LONG).show()
-                                }
-                                setNegativeButton("RETURN"){_,_->
-                                    finish()
-                                }
-                                show()
+            override fun onResponse(call: Call<Score>?, response: Response<Score>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        AlertDialog.Builder(this@MainActivity).apply {
+                            setTitle("Send Data")
+                            setMessage("SCORE: ${it.currentScore}\nTOTAL:${it.totalScore}\nRank: ${it.rank}")
+                            setPositiveButton("OK"){_,_ ->
+                                finish()
                             }
-
+                            show()
                         }
+
                     }
                 }
-            })
-        }
-        catch (e: Throwable){
-            AlertDialog.Builder(this@MainActivity)
-                    .setTitle("Send Data")
-                    .setMessage(e.message).show()
-        }
+                else{
+                    AlertDialog.Builder(this@MainActivity)
+                            .setTitle("Send Data")
+                            .setMessage("response is not Successful.")
+                            .show()
+                }
+            }
+        })
     }
 
 }

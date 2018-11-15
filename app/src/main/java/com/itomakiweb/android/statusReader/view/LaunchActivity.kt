@@ -31,7 +31,7 @@ class LaunchActivity : AppCompatActivity() {
         super.onStart()
         handler.postDelayed(runnable, 2000)
         try {
-            shouldSignIn = UserAuthManager.ShouldSignin(this@LaunchActivity)
+            shouldSignIn = UserAuthManager.shouldSignIn(this@LaunchActivity)
             isFinishedConfirm = true
             if(isTimeEnough){
                 logoFinish()

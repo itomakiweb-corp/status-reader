@@ -10,27 +10,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <TextView
-            android:id="@+id/fullscreen_content"
+            android:id="@+id/homeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:gravity="center"
             android:keepScreenOn="true"
-            android:text="play status reader"
+            android:text="Status Reader"
             android:textColor="#33b5e5"
             android:textSize="32sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
+        <ProgressBar
+            android:id="@+id/progressBar_getSeedAll"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="200sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="START" />
+            android:indeterminate="true"
+            android:visibility="visible" />
+
+        <ScrollView
+            android:id="@+id/SeedListScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/SeedList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

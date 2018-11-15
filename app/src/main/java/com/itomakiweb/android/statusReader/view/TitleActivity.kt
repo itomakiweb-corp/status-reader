@@ -13,7 +13,6 @@ import com.itomakiweb.android.statusReader.model.UserAuthManager
 import com.itomakiweb.android.statusReader.service.StatusReaderApiClient
 import com.itomakiweb.android.statusReader.service.UserData
 import kotlinx.android.synthetic.main.activity_title.*
-import okhttp3.ResponseBody
 import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
@@ -137,7 +136,7 @@ class TitleActivity : AppCompatActivity() {
                                 setTitle("Create UserData")
                                 setMessage("success.")
                                 setPositiveButton("OK"){_,_ ->
-                                    UserAuthManager.SaveAuth(context, authType, it.userId, it.userName)
+                                    UserAuthManager.saveAuth(context, authType, it.userId, it.userName)
                                     toHome()
                                 }
                                 show()

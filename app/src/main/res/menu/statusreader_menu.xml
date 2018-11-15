@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuitem_settings"
+        android:enabled="false"
+        android:title="App Settings" />
+    <item
+        android:id="@+id/menuitem_status"
+        android:enabled="false"
+        android:title="User Status" />
+    <item
+        android:id="@+id/menuitem_seed"
+        android:title="My Seed" />
+    <item
+        android:id="@+id/menuitem_account"
+        android:title="SignOut" />
+</menu>
