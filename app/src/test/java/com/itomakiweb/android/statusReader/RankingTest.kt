@@ -4,15 +4,15 @@ import org.junit.Test
 import org.junit.Assert.*
 
 class RankingTest {
-    private val wordMap = mapOf("a" to 2, "b" to 2, "c" to 3, "d" to 1, "e" to 1)
-    private val speed = 12
+    private val wordMap = mapOf("word" to "yasdui", "speed" to 5, "c" to 3, "d" to 1, "e" to 1)
+    private val speed = 120
 
     private val ranking = Ranking(wordMap, speed)
 
 
     @Test
     fun getScore01() {
-        val expected = 36
+        val expected = 360
         val actual = ranking.getScore()
         assertEquals(expected, actual)
         println(wordMap)
