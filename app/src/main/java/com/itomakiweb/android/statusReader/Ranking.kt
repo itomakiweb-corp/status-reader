@@ -46,7 +46,6 @@ class Ranking(private val wordMap: Map<String, Int>, private val speed: Int) {
     fun getSpeedScore(moderateScore: Int): Int {
         return moderateScore * this.speed
     }
-
     
 
     fun getPenaltyScore(speedScore: Int): Int {
