@@ -10,7 +10,7 @@ class RankingTest {
     private val ranking = Ranking(wordMap, speed)
 
 
-    @Test
+    @Test //test
     fun getScore01() {
         val expected = 36
         val actual = ranking.getScore()
