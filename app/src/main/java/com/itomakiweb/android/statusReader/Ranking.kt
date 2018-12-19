@@ -44,8 +44,9 @@ class Ranking(private val wordMap: Map<String, Int>, private val speed: Int) {
 
 
     fun getSpeedScore(moderateScore: Int): Int {
-        return moderateScore * this.speed
-    }
+        if(speed<=3) return 0
+        else return moderateScore * this.speed
+    }   //3秒以内で点数0になる部分だけ。速度に応じた倍率で算出するにはここも変える必要ありそう。
     
 
     fun getPenaltyScore(speedScore: Int): Int {
