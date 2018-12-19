@@ -9,7 +9,7 @@ class RankingTest {
 
     private val ranking = Ranking(wordMap, speed)
 
-
+//もう、ばか
     @Test
     fun getScore01() {
         val expected = 36
