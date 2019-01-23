@@ -18,7 +18,7 @@ class RankingTest {
         println(wordMap)
     }
 
-
+//ばかん
 
     @Test
     fun getModerateScore() {
